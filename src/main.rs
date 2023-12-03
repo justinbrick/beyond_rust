@@ -44,7 +44,6 @@ fn verify_request(headers: &HeaderMap, body: &Body) -> Result<bool, lambda_http:
     let Some(signature) = headers.get("X-Signature-Ed25519") else {return Ok(false)};
     let Body::Text(body) = body else {return Ok(false)};
     // Now, validate the signature returned. If this fails, just return false instead of throwing.
-    tracing::info!("We've got here!");
     let Ok(signature) = hex::decode(signature)
         .map_err(Into::into)
         .and_then(|vec| {
